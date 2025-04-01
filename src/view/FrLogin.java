@@ -5,6 +5,9 @@
  */
 package view;
 
+import controller.UsuarioController;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author aluno.saolucas
@@ -65,6 +68,16 @@ public class FrLogin extends javax.swing.JFrame {
 
         btmLogar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btmLogar.setText("Logar");
+        btmLogar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btmLogarMouseClicked(evt);
+            }
+        });
+        btmLogar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btmLogarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btmLogar, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 476, -1, -1));
 
         lbImagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/userIcon.png"))); // NOI18N
@@ -74,11 +87,15 @@ public class FrLogin extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -87,6 +104,40 @@ public class FrLogin extends javax.swing.JFrame {
     private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSenhaActionPerformed
+
+    private void btmLogarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btmLogarMouseClicked
+        realizarLogin();
+    }//GEN-LAST:event_btmLogarMouseClicked
+
+    private void btmLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmLogarActionPerformed
+        realizarLogin();
+    }//GEN-LAST:event_btmLogarActionPerformed
+
+    private void realizarLogin() {
+        String email = txtEmail.getText();
+        String senha = new String(txtSenha.getPassword());
+
+        if (email.equals("")) {
+            JOptionPane.showMessageDialog(null,
+                    "Campo 'Email' em branco!");
+            return;
+        }
+        if (senha.equals("")) {
+            JOptionPane.showMessageDialog(null,
+                    "Campo senha em branco!");
+            return;
+
+        }
+        UsuarioController controller = new UsuarioController();
+        boolean autenticado = controller.autenticar(email, senha);
+
+        if (autenticado) {
+            JOptionPane.showMessageDialog(null, "Logado Com Sucesso");
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuario ou senha incorretos");
+        }
+
+    }
 
     /**
      * @param args the command line arguments
