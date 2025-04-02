@@ -6,7 +6,11 @@
 package view;
 
 import controller.UsuarioController;
+import java.awt.event.KeyEvent;
+import java.net.URL;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import utils.Utils;
 
 /**
  *
@@ -19,6 +23,7 @@ public class FrLogin extends javax.swing.JFrame {
      */
     public FrLogin() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -40,31 +45,42 @@ public class FrLogin extends javax.swing.JFrame {
         lbImagem = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Autenticação");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(102, 255, 102));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbAutenticacao.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         lbAutenticacao.setText("Autenticação");
-        jPanel1.add(lbAutenticacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 181, -1, -1));
+        jPanel1.add(lbAutenticacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, -1, -1));
 
         txtEmail.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jPanel1.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 325, 270, 26));
+        jPanel1.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 320, 270, 26));
 
         txtSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSenhaActionPerformed(evt);
             }
         });
-        jPanel1.add(txtSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 410, 270, -1));
+        txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSenhaKeyPressed(evt);
+            }
+        });
+        jPanel1.add(txtSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 410, 270, -1));
 
         lbEmail.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         lbEmail.setText("Email");
-        jPanel1.add(lbEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 297, -1, -1));
+        jPanel1.add(lbEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, -1, -1));
 
         lbSenha.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         lbSenha.setText("Senha");
-        jPanel1.add(lbSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 382, -1, -1));
+        jPanel1.add(lbSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 380, -1, -1));
 
         btmLogar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btmLogar.setText("Logar");
@@ -78,10 +94,10 @@ public class FrLogin extends javax.swing.JFrame {
                 btmLogarActionPerformed(evt);
             }
         });
-        jPanel1.add(btmLogar, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 476, -1, -1));
+        jPanel1.add(btmLogar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 470, -1, -1));
 
         lbImagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/userIcon.png"))); // NOI18N
-        jPanel1.add(lbImagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(143, 35, -1, -1));
+        jPanel1.add(lbImagem, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,9 +109,7 @@ public class FrLogin extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -113,10 +127,28 @@ public class FrLogin extends javax.swing.JFrame {
         realizarLogin();
     }//GEN-LAST:event_btmLogarActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        URL caminhoImagem = getClass().getResource("/images/title icon.png");
+        
+        ImageIcon icon = new ImageIcon(caminhoImagem);
+        
+        this.setIconImage(icon.getImage());
+    }//GEN-LAST:event_formWindowOpened
+
+    private void txtSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyPressed
+        
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            realizarLogin();
+        } else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            txtSenha.setText("");
+        }
+
+    }//GEN-LAST:event_txtSenhaKeyPressed
+    
     private void realizarLogin() {
         String email = txtEmail.getText();
         String senha = new String(txtSenha.getPassword());
-
+        
         if (email.equals("")) {
             JOptionPane.showMessageDialog(null,
                     "Campo 'Email' em branco!");
@@ -126,17 +158,23 @@ public class FrLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,
                     "Campo senha em branco!");
             return;
-
+            
         }
+
+        //calcular o hash da senha
+        senha = Utils.calcularHash(senha);
+        
         UsuarioController controller = new UsuarioController();
         boolean autenticado = controller.autenticar(email, senha);
-
+        
         if (autenticado) {
-            JOptionPane.showMessageDialog(null, "Logado Com Sucesso");
+            //se está autenticado, cria a tela menu, através de um obj.
+            FrMenu telaMenu = new FrMenu();
+            telaMenu.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Usuario ou senha incorretos");
         }
-
+        
     }
 
     /**

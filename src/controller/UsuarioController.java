@@ -22,7 +22,7 @@ public class UsuarioController {
 
         //Montar o comando a ser executado
         //os ? são variáveis que são preenchidas mais adiante
-        String sql = "SELECT * from TBUSUARIO "
+        String sql = "SELECT * from USUARIO "
                 + " WHERE email = ? and senha = ? "
                 + " and ativo = true";
 

@@ -5,8 +5,9 @@
         <group>
             <file>file:/C:/Users/aluno.saolucas.ENSINO/Documents/NetBeansProjects/projetoPOO/src/model/Usuario.java</file>
             <file>file:/C:/Users/aluno.saolucas.ENSINO/Documents/NetBeansProjects/projetoPOO/src/projetopoo/ProjetoPOO.java</file>
-            <file>file:/C:/Users/aluno.saolucas.ENSINO/Documents/NetBeansProjects/projetoPOO/src/view/FrLogin.java</file>
             <file>file:/C:/Users/aluno.saolucas.ENSINO/Documents/NetBeansProjects/projetoPOO/src/controller/GerenciadorConexao.java</file>
+            <file>file:/C:/Users/aluno.saolucas.ENSINO/Documents/NetBeansProjects/projetoPOO/src/view/FrLogin.java</file>
+            <file>file:/C:/Users/aluno.saolucas.ENSINO/Documents/NetBeansProjects/projetoPOO/src/controller/UsuarioController.java</file>
         </group>
     </open-files>
 </project-private>
