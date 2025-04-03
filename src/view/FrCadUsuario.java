@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import model.Usuario;
 
 /**
  *
@@ -228,10 +229,31 @@ public class FrCadUsuario extends javax.swing.JDialog {
 
 //verificar os Caampos preenchidos corretamente, se estiverem corretos vou gravar, senão nada acontece.
         verificarCampos();
+        
+        gravar();
 
 
     }//GEN-LAST:event_btSalvarMouseClicked
 
+    public void gravar(){
+        //criar uma instancia da classe usuario
+        //preencher os campos
+        
+        Usuario usu = new Usuario();
+        
+        String lSenha = new String(txtSenha.getPassword());
+        String lHashSenha = utils.Utils.calcularHash(lSenha);
+        
+        Date dataNasc = //conversão de String para Date
+        
+        usu.setNome(txtNome.getText());
+        usu.setEmail(txtEmail.getText());
+        usu.setSenha(lHashSenha);
+        usu.setAtivo(chkAtivo.isSelected());
+        usu.setDataNasc(dataNasc);
+        //passo o objeto para o controller e ele ira gravar no banco
+    }
+    
     private void txtNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyReleased
 
 
@@ -294,18 +316,9 @@ public class FrCadUsuario extends javax.swing.JDialog {
         }
     }
 
-    public boolean iniciar(java.awt.event.KeyEvent evt) {
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_SPACE) {
-
-            verificarCampos();
-        }
-    }
-
-
     public boolean verificarCampos() {
 
         verificarEmail();
-        verificarSenha();
         verificarSenha();
 
         if (txtNome.getText().equals("")) {
