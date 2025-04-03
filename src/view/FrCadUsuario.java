@@ -5,6 +5,11 @@
  */
 package view;
 
+import java.awt.event.KeyEvent;
+import java.net.URL;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author aluno.saolucas
@@ -17,6 +22,9 @@ public class FrCadUsuario extends javax.swing.JDialog {
     public FrCadUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+        this.setLocationRelativeTo(null);
+
     }
 
     /**
@@ -32,26 +40,39 @@ public class FrCadUsuario extends javax.swing.JDialog {
         lbTitulo = new javax.swing.JLabel();
         lbNome = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
-        lbEmail = new javax.swing.JLabel();
+        IconMail = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         lbSenha = new javax.swing.JLabel();
         txtSenha = new javax.swing.JPasswordField();
-        lbDataNascimento = new javax.swing.JLabel();
+        IconNascimento = new javax.swing.JLabel();
         dateNascimento = new javax.swing.JFormattedTextField();
         chkAtivo = new javax.swing.JCheckBox();
         lbConfirmarSenha = new javax.swing.JLabel();
         txtConfirmarSenha = new javax.swing.JPasswordField();
         btCancelar = new javax.swing.JButton();
         btSalvar = new javax.swing.JButton();
+        iconSenha = new javax.swing.JLabel();
+        IconSenha = new javax.swing.JLabel();
+        lbEmail1 = new javax.swing.JLabel();
+        lbDataNascimento1 = new javax.swing.JLabel();
+        IconSalvar = new javax.swing.JLabel();
+        IconCancelar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastro de Usuário");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(102, 255, 102));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbTitulo.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        lbTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/userIcon.png"))); // NOI18N
         lbTitulo.setText("Cadastro De Usuário");
-        jPanel1.add(lbTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 68, -1, -1));
+        jPanel1.add(lbTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
 
         lbNome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbNome.setText("Nome");
@@ -62,54 +83,110 @@ public class FrCadUsuario extends javax.swing.JDialog {
                 txtNomeActionPerformed(evt);
             }
         });
-        jPanel1.add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 219, 530, -1));
+        txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNomeKeyReleased(evt);
+            }
+        });
+        jPanel1.add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 219, 340, -1));
 
-        lbEmail.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lbEmail.setText("Email");
-        jPanel1.add(lbEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
+        IconMail.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        IconMail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mailIcon.png"))); // NOI18N
+        jPanel1.add(IconMail, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, -1, -1));
 
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmailActionPerformed(evt);
             }
         });
-        jPanel1.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 299, 530, -1));
+        jPanel1.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 299, 220, -1));
 
         lbSenha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbSenha.setText("Senha");
         jPanel1.add(lbSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, -1, -1));
         jPanel1.add(txtSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 200, 30));
 
-        lbDataNascimento.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lbDataNascimento.setText("Data de nascimento");
-        jPanel1.add(lbDataNascimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, -1, -1));
+        IconNascimento.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        IconNascimento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/nascimentoIcon.png"))); // NOI18N
+        jPanel1.add(IconNascimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 510, -1, 30));
+
+        dateNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         jPanel1.add(dateNascimento, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 510, 200, 30));
 
         chkAtivo.setText("Ativo");
         jPanel1.add(chkAtivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 510, -1, -1));
 
         lbConfirmarSenha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lbConfirmarSenha.setText("Confirmar Senha");
-        jPanel1.add(lbConfirmarSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, -1, -1));
+        lbConfirmarSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/passwordIcon].png"))); // NOI18N
+        jPanel1.add(lbConfirmarSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 430, -1, -1));
         jPanel1.add(txtConfirmarSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 200, 30));
 
         btCancelar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btCancelar.setText("Cancelar");
-        jPanel1.add(btCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 600, -1, -1));
+        btCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btCancelarMouseClicked(evt);
+            }
+        });
+        btCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCancelarActionPerformed(evt);
+            }
+        });
+        btCancelar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btCancelarKeyPressed(evt);
+            }
+        });
+        jPanel1.add(btCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 590, -1, -1));
 
         btSalvar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btSalvar.setText("Salvar");
-        jPanel1.add(btSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 600, -1, -1));
+        btSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btSalvarMouseClicked(evt);
+            }
+        });
+        btSalvar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btSalvarKeyPressed(evt);
+            }
+        });
+        jPanel1.add(btSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 590, -1, -1));
+
+        iconSenha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        iconSenha.setText("Confirmar Senha");
+        jPanel1.add(iconSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, -1, -1));
+
+        IconSenha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        IconSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/passwordIcon].png"))); // NOI18N
+        jPanel1.add(IconSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 360, -1, -1));
+
+        lbEmail1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lbEmail1.setText("Email");
+        jPanel1.add(lbEmail1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
+
+        lbDataNascimento1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lbDataNascimento1.setText("Data de nascimento");
+        jPanel1.add(lbDataNascimento1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, -1, -1));
+
+        IconSalvar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        IconSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/salvarIcon.png"))); // NOI18N
+        jPanel1.add(IconSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 590, -1, -1));
+
+        IconCancelar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        IconCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancelarIcon.png"))); // NOI18N
+        jPanel1.add(IconCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 590, -1, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 781, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
         );
 
         pack();
@@ -122,6 +199,152 @@ public class FrCadUsuario extends javax.swing.JDialog {
     private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        URL caminhoImagem = getClass().getResource("/images/title icon.png");
+
+        ImageIcon icon = new ImageIcon(caminhoImagem);
+
+        this.setIconImage(icon.getImage());
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCancelarMouseClicked
+        dispose();
+    }//GEN-LAST:event_btCancelarMouseClicked
+
+    private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btCancelarActionPerformed
+
+    private void btCancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btCancelarKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            dispose();
+        }
+
+    }//GEN-LAST:event_btCancelarKeyPressed
+
+    private void btSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSalvarMouseClicked
+
+//verificar os Caampos preenchidos corretamente, se estiverem corretos vou gravar, senão nada acontece.
+        verificarCampos();
+
+
+    }//GEN-LAST:event_btSalvarMouseClicked
+
+    private void txtNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyReleased
+
+
+    }//GEN-LAST:event_txtNomeKeyReleased
+
+    private void btSalvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btSalvarKeyPressed
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_SPACE) {
+
+            verificarCampos();
+        }
+
+    }//GEN-LAST:event_btSalvarKeyPressed
+
+    public boolean verificarNome() {
+
+        String nome = txtNome.getText();
+
+        if (nome.matches("^[a-zA-ZÀ-ÿ ]+$")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "O campo nome não pode conter números, ou caracteres especíais, como !,@...");
+            return false;
+        }
+    }
+
+    public boolean verificarEmail() {
+        String email = txtEmail.getText();
+        if (email.matches("^[^\\s@]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            return true;
+
+        } else {
+            JOptionPane.showMessageDialog(null, "O campo 'email' n deve conter espaços, e deve contar @");
+            return false;
+        }
+    }
+
+    public boolean verificarSenha() {
+
+        String senha = new String(txtSenha.getPassword()); // Converte char[] para String
+
+        if (senha.length() < 6 || senha.contains(" ")) {
+            JOptionPane.showMessageDialog(null, "Tem menos de 6 caracteres ou contem espaços.");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean verificarNasc() {
+
+        String nasc = dateNascimento.getText();
+
+        if (nasc.length() < 10) {
+            JOptionPane.showMessageDialog(null, "Data inválida");
+            return false;
+
+        } else {
+            return true;
+        }
+    }
+
+    public boolean iniciar(java.awt.event.KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_SPACE) {
+
+            verificarCampos();
+        }
+    }
+
+
+    public boolean verificarCampos() {
+
+        verificarEmail();
+        verificarSenha();
+        verificarSenha();
+
+        if (txtNome.getText().equals("")) {
+
+            JOptionPane.showMessageDialog(null,
+                    "O Campo 'Nome' tá em branco");
+
+            return false;
+        }
+
+        if (txtEmail.getText().equals("")) {
+
+            JOptionPane.showMessageDialog(null, "Campo 'Email' vazio");
+
+            return false;
+        }
+
+        if (new String(txtSenha.getPassword()).equals("")) {
+
+            JOptionPane.showMessageDialog(null, "Campo 'Senha' em branco");
+
+            return false;
+        }
+
+        String lSenha = new String(txtSenha.getPassword());
+        String lConfirmaSenha = new String(txtConfirmarSenha.getPassword());
+
+        if (!lSenha.equals(lConfirmaSenha)) {
+            JOptionPane.showMessageDialog(null, "As senhas não Coincidem");
+
+            return false;
+        }
+        if (verificarNome() == false) {
+            return false;
+        }
+        JOptionPane.showMessageDialog(null, "Tudo certo");
+        return true;
+
+    }
 
     /**
      * @param args the command line arguments
@@ -166,14 +389,20 @@ public class FrCadUsuario extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel IconCancelar;
+    private javax.swing.JLabel IconMail;
+    private javax.swing.JLabel IconNascimento;
+    private javax.swing.JLabel IconSalvar;
+    private javax.swing.JLabel IconSenha;
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btSalvar;
     private javax.swing.JCheckBox chkAtivo;
     private javax.swing.JFormattedTextField dateNascimento;
+    private javax.swing.JLabel iconSenha;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbConfirmarSenha;
-    private javax.swing.JLabel lbDataNascimento;
-    private javax.swing.JLabel lbEmail;
+    private javax.swing.JLabel lbDataNascimento1;
+    private javax.swing.JLabel lbEmail1;
     private javax.swing.JLabel lbNome;
     private javax.swing.JLabel lbSenha;
     private javax.swing.JLabel lbTitulo;

@@ -55,7 +55,7 @@ public class FrMenu extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user512px.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(182, 136, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, -1, -1));
 
         meCadastro.setText("Cadastro");
 
@@ -76,6 +76,11 @@ public class FrMenu extends javax.swing.JFrame {
         meCadastro.add(jMenuItem2);
 
         miSair.setText("Sair");
+        miSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miSairActionPerformed(evt);
+            }
+        });
         meCadastro.add(miSair);
 
         barMenu.add(meCadastro);
@@ -99,18 +104,27 @@ public class FrMenu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 917, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 664, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void miCadUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCadUsuarioActionPerformed
-        // TODO add your handling code here:
+
+        //Crio a tela;
+        FrCadUsuario telaCadastro = new FrCadUsuario(this, rootPaneCheckingEnabled);
+        
+        telaCadastro.setVisible(true);
+        
     }//GEN-LAST:event_miCadUsuarioActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -124,6 +138,10 @@ public class FrMenu extends javax.swing.JFrame {
 
         this.setIconImage(icon.getImage());
     }//GEN-LAST:event_formWindowOpened
+
+    private void miSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSairActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_miSairActionPerformed
 
     /**
      * @param args the command line arguments
