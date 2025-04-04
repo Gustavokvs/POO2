@@ -5,11 +5,14 @@
  */
 package view;
 
+import controller.UsuarioController;
 import java.awt.event.KeyEvent;
 import java.net.URL;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import model.Usuario;
+import utils.Utils;
 
 /**
  *
@@ -229,31 +232,40 @@ public class FrCadUsuario extends javax.swing.JDialog {
 
 //verificar os Caampos preenchidos corretamente, se estiverem corretos vou gravar, senão nada acontece.
         verificarCampos();
-        
+
         gravar();
 
 
     }//GEN-LAST:event_btSalvarMouseClicked
 
-    public void gravar(){
+    public void gravar() {
         //criar uma instancia da classe usuario
         //preencher os campos
-        
+
         Usuario usu = new Usuario();
-        
+
         String lSenha = new String(txtSenha.getPassword());
         String lHashSenha = utils.Utils.calcularHash(lSenha);
-        
-        Date dataNasc = //conversão de String para Date
-        
+
+        //conversão de String para Date
+        Date dataNasc = Utils.converterStringToDate(dateNascimento.getText());
+
         usu.setNome(txtNome.getText());
         usu.setEmail(txtEmail.getText());
         usu.setSenha(lHashSenha);
         usu.setAtivo(chkAtivo.isSelected());
         usu.setDataNasc(dataNasc);
         //passo o objeto para o controller e ele ira gravar no banco
+        UsuarioController controller = new UsuarioController();
+        if (controller.inserirUsuario(usu)) {
+            JOptionPane.showMessageDialog(null, "Usuário gravado com sucesso");
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "O cadastro não foi gravado");
+
+        }
     }
-    
+
     private void txtNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyReleased
 
 
