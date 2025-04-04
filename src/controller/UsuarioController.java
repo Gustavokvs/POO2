@@ -96,4 +96,32 @@ public class UsuarioController {
         return false;
     }
 
+    public boolean alterarUsuario(Usuario usu) {
+
+        String sql = "UPDATE USUARIO SET NOME = ?, EMAIL = ?, SENHA = ?, DATANASC = ?, ATIVO = ? WHERE ID = ?";
+
+        GerenciadorConexao conexão = new GerenciadorConexao();
+        PreparedStatement comando = null;
+
+        try {
+            comando = conexão.prepararComando(sql);
+
+            comando.setString(1, usu.getNome());
+            comando.setString(2, usu.getEmail());
+            comando.setString(3, usu.getSenha());
+            comando.setDate(4, new java.sql.Date(usu.getDataNasc().getTime()));
+            comando.setBoolean(5, usu.isAtivo());
+            comando.setInt(6, usu.getId());
+
+            comando.executeUpdate();
+
+            return true;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }finally {
+            conexão.fecharConexao(comando);
+        }
+        return false;
+    }
+
 }
