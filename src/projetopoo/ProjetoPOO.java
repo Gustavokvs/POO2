@@ -10,7 +10,7 @@ public class ProjetoPOO {
 
     public static void main(String[] args) {
 
-        Usuario teste1 = new Usuario();
+        /*    Usuario teste1 = new Usuario();
 
         teste1.setNome("Auberto");
         teste1.setAtivo(true);
@@ -27,7 +27,7 @@ public class ProjetoPOO {
             JOptionPane.showMessageDialog(null, "O cadastro não foi gravado");
 
         }
-
+         */
         new FrLogin().setVisible(true);
 
     }

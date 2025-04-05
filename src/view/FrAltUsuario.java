@@ -7,6 +7,8 @@ package view;
 
 import controller.UsuarioController;
 import java.awt.event.KeyEvent;
+import java.util.Date;
+import javax.swing.JOptionPane;
 import model.Usuario;
 import utils.Utils;
 
@@ -20,6 +22,125 @@ public class FrAltUsuario extends javax.swing.JDialog {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void gravar() {
+        //criar uma instancia da classe usuario
+        //preencher os campos
+
+        Usuario usu = new Usuario();
+
+        String lSenha = new String(txtSenha.getPassword());
+        String lHashSenha = utils.Utils.calcularHash(lSenha);
+
+        //conversão de String para Date
+        Date dataNasc = Utils.converterStringToDate(dateNascimento.getText());
+
+        usu.setNome(txtNome.getText());
+        usu.setEmail(txtEmail.getText());
+        usu.setSenha(lHashSenha);
+        usu.setAtivo(chkAtivo.isSelected());
+        usu.setDataNasc(dataNasc);
+        //passo o objeto para o controller e ele ira gravar no banco
+        UsuarioController controller = new UsuarioController();
+        if (controller.inserirUsuario(usu)) {
+            JOptionPane.showMessageDialog(null, "Usuário gravado com sucesso");
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "O cadastro não foi gravado");
+
+        }
+    }
+
+    public boolean verificarNome() {
+
+        String nome = txtNome.getText();
+
+        if (nome.matches("^[a-zA-ZÀ-ÿ ]+$")) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null, "O campo nome não pode conter números, ou caracteres especíais, como !,@...");
+            return false;
+        }
+    }
+
+    public boolean verificarEmail() {
+        String email = txtEmail.getText();
+        if (email.matches("^[^\\s@]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            return true;
+
+        } else {
+            JOptionPane.showMessageDialog(null, "O campo 'email' n deve conter espaços, e deve contar @");
+            return false;
+        }
+    }
+
+    public boolean verificarSenha() {
+
+        String senha = new String(txtSenha.getPassword()); // Converte char[] para String
+
+        if (senha.length() < 6 || senha.contains(" ")) {
+            JOptionPane.showMessageDialog(null, "Tem menos de 6 caracteres ou contem espaços.");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean verificarNasc() {
+
+        String nasc = dateNascimento.getText();
+
+        if (nasc.length() < 10) {
+            JOptionPane.showMessageDialog(null, "Data inválida");
+            return false;
+
+        } else {
+            return true;
+        }
+    }
+
+    public boolean verificarCampos() {
+
+        verificarEmail();
+        verificarSenha();
+
+        if (txtNome.getText().equals("")) {
+
+            JOptionPane.showMessageDialog(null,
+                    "O Campo 'Nome' tá em branco");
+
+            return false;
+        }
+
+        if (txtEmail.getText().equals("")) {
+
+            JOptionPane.showMessageDialog(null, "Campo 'Email' vazio");
+
+            return false;
+        }
+
+        if (new String(txtSenha.getPassword()).equals("")) {
+
+            JOptionPane.showMessageDialog(null, "Campo 'Senha' em branco");
+
+            return false;
+        }
+
+        String lSenha = new String(txtSenha.getPassword());
+        String lConfirmaSenha = new String(txtConfirmarSenha.getPassword());
+
+        if (!lSenha.equals(lConfirmaSenha)) {
+            JOptionPane.showMessageDialog(null, "As senhas não Coincidem");
+
+            return false;
+        }
+        if (verificarNome() == false) {
+            return false;
+        }
+        JOptionPane.showMessageDialog(null, "Tudo certo");
+        return true;
+
     }
 
     /**
@@ -125,6 +246,8 @@ public class FrAltUsuario extends javax.swing.JDialog {
         lbSenha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbSenha.setText("Senha");
         jPanel1.add(lbSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 470, -1, -1));
+
+        txtSenha.setEditable(false);
         jPanel1.add(txtSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 200, 30));
 
         IconNascimento.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -140,6 +263,8 @@ public class FrAltUsuario extends javax.swing.JDialog {
         lbConfirmarSenha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbConfirmarSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/passwordIcon].png"))); // NOI18N
         jPanel1.add(lbConfirmarSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 570, -1, -1));
+
+        txtConfirmarSenha.setEditable(false);
         jPanel1.add(txtConfirmarSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 570, 200, 30));
 
         btCancelar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -166,6 +291,11 @@ public class FrAltUsuario extends javax.swing.JDialog {
         btAlterarSenha.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btAlterarSenhaMouseClicked(evt);
+            }
+        });
+        btAlterarSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAlterarSenhaActionPerformed(evt);
             }
         });
         btAlterarSenha.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -222,6 +352,11 @@ public class FrAltUsuario extends javax.swing.JDialog {
                 btSalvarMouseClicked(evt);
             }
         });
+        btSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSalvarActionPerformed(evt);
+            }
+        });
         btSalvar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 btSalvarKeyPressed(evt);
@@ -273,9 +408,8 @@ public class FrAltUsuario extends javax.swing.JDialog {
     private void btAlterarSenhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAlterarSenhaMouseClicked
 
         //verificar os Caampos preenchidos corretamente, se estiverem corretos vou gravar, senão nada acontece.
-      //  verificarCampos();
-
-        //gravar();
+        verificarCampos();
+        gravar();
 
     }//GEN-LAST:event_btAlterarSenhaMouseClicked
 
@@ -283,7 +417,7 @@ public class FrAltUsuario extends javax.swing.JDialog {
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_SPACE) {
 
-           // verificarCampos();
+            verificarCampos();
         }
     }//GEN-LAST:event_btAlterarSenhaKeyPressed
 
@@ -302,6 +436,37 @@ public class FrAltUsuario extends javax.swing.JDialog {
     private void btSalvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btSalvarKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_btSalvarKeyPressed
+
+    private void btAlterarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarSenhaActionPerformed
+
+        if (txtSenha.isEditable() == false) {
+            txtSenha.setEditable(true);
+            txtConfirmarSenha.setEditable(true);
+//edtSenha.setBackground (Color.white); 
+//edtConfirmaSenha.setBackground (Color.white); 
+            btAlterarSenha.setText("Cancelar alteração");
+            txtSenha.setText("");
+            txtConfirmarSenha.setText("");
+        } else {
+            txtSenha.setEditable(false);
+            txtConfirmarSenha.setEditable(false);
+//edtSenha.setBackground (Color.gray); 
+//edtConfirmaSenha.setBackground (Color.gray); 
+            btAlterarSenha.setText("Alterar Senha");
+            txtSenha.setText("");
+            txtConfirmarSenha.setText("");
+        }
+
+    }//GEN-LAST:event_btAlterarSenhaActionPerformed
+
+    private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+
+        if (verificarCampos()) {
+            gravar();
+
+        }
+
+    }//GEN-LAST:event_btSalvarActionPerformed
 
     /**
      * @param args the command line arguments
