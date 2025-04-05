@@ -19,7 +19,8 @@ import model.Usuario;
 /*O PREPAREDSTATEMENT É IMPORTADO DO JAVA, 
 O COMANDO É PARA INTERPRETAR O COMANDO Q EU ESCREVER EM STRING, E TRADUZIR PRO SQL
 QUANDO EU ESCREVO comando = gerenciador.prepararComando(sql) EU DIGO
-COMANDO = FAZ A CONEXÃO COM O BANCO Q PASSEI (NESSE CASO O SQL), SE FUNCIONAR INTERPRETE O COMANDO Q DIGITEI*/
+SE A CONEXÃO FOR ESTABELECIDA, ENTRA NELA E ESCREVE O COMANDO (PASSADO PELA STRING SQL) E ARMAZENA TUDO ISSO NO 
+COMANDO */
 public class UsuarioController {
 
     public boolean autenticar(String email, String senha) {
@@ -118,10 +119,48 @@ public class UsuarioController {
             return true;
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
-        }finally {
+        } finally {
             conexão.fecharConexao(comando);
         }
         return false;
+    }
+
+    public Usuario buscarPorId(int id) {
+
+        String sql = "SELECT * FROM USUARIO "
+                + " WHERE ID = ?";
+
+        GerenciadorConexao conexao = new GerenciadorConexao();
+        PreparedStatement comando = null;
+        ResultSet resultado = null;
+
+        Usuario usu = new Usuario();
+        try {
+            comando = conexao.prepararComando(sql);
+
+            comando.setInt(1, id);
+
+            resultado = comando.executeQuery();
+
+            if (resultado.next()) {
+
+                usu.setId(resultado.getInt("id"));
+                usu.setNome(resultado.getString("nome"));
+                usu.setEmail(resultado.getString("email"));
+                usu.setSenha(resultado.getString("senha"));
+                usu.setDataNasc(resultado.getDate("datanasc"));
+                usu.setAtivo(resultado.getBoolean("ativo"));
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioController.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        } finally {
+            conexao.fecharConexao(comando, resultado);
+        }
+
+        return usu;
     }
 
 }

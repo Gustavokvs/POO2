@@ -33,6 +33,9 @@ public class FrMenu extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        btmAlterar = new javax.swing.JButton();
+        lbCodUsu = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
         barMenu = new javax.swing.JMenuBar();
         meCadastro = new javax.swing.JMenu();
         miCadUsuario = new javax.swing.JMenuItem();
@@ -56,6 +59,24 @@ public class FrMenu extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user512px.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, -1, -1));
+
+        btmAlterar.setText("Alterar");
+        btmAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btmAlterarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btmAlterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, -1, -1));
+
+        lbCodUsu.setText("Código Usuario");
+        jPanel1.add(lbCodUsu, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, -1, -1));
+
+        txtId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtId, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 130, -1));
 
         meCadastro.setText("Cadastro");
 
@@ -122,9 +143,9 @@ public class FrMenu extends javax.swing.JFrame {
 
         //Crio a tela;
         FrCadUsuario telaCadastro = new FrCadUsuario(this, rootPaneCheckingEnabled);
-        
+
         telaCadastro.setVisible(true);
-        
+
     }//GEN-LAST:event_miCadUsuarioActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -142,6 +163,20 @@ public class FrMenu extends javax.swing.JFrame {
     private void miSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSairActionPerformed
         this.dispose();
     }//GEN-LAST:event_miSairActionPerformed
+
+    private void btmAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmAlterarActionPerformed
+
+        int id = Integer.parseInt(txtId.getText());
+
+        FrAltUsuario telaAlteracao = new FrAltUsuario(this, rootPaneCheckingEnabled, id);
+
+        telaAlteracao.setVisible(true);
+
+    }//GEN-LAST:event_btmAlterarActionPerformed
+
+    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -180,15 +215,18 @@ public class FrMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barMenu;
+    private javax.swing.JButton btmAlterar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lbCodUsu;
     private javax.swing.JMenu meCadastro;
     private javax.swing.JMenu meConsulta;
     private javax.swing.JMenu meSobre;
     private javax.swing.JMenuItem miCadUsuario;
     private javax.swing.JMenuItem miConUsuario;
     private javax.swing.JMenuItem miSair;
+    private javax.swing.JTextField txtId;
     // End of variables declaration//GEN-END:variables
 }
