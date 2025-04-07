@@ -25,31 +25,38 @@ public class FrAltUsuario extends javax.swing.JDialog {
     }
 
     public void gravar() {
-        //criar uma instancia da classe usuario
-        //preencher os campos
 
         Usuario usu = new Usuario();
 
-        String lSenha = new String(txtSenha.getPassword());
-        String lHashSenha = utils.Utils.calcularHash(lSenha);
-
-        //conversão de String para Date
-        Date dataNasc = Utils.converterStringToDate(dateNascimento.getText());
-
+        usu.setId(id);
         usu.setNome(txtNome.getText());
         usu.setEmail(txtEmail.getText());
-        usu.setSenha(lHashSenha);
-        usu.setAtivo(chkAtivo.isSelected());
-        usu.setDataNasc(dataNasc);
-        //passo o objeto para o controller e ele ira gravar no banco
-        UsuarioController controller = new UsuarioController();
-        if (controller.inserirUsuario(usu)) {
-            JOptionPane.showMessageDialog(null, "Usuário gravado com sucesso");
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "O cadastro não foi gravado");
+
+        if (txtSenha.isEditable()) {
+
+            //define uma string, como senha é uma password, n é string, esse comando faz a transição de password pra string.
+            String senha = new String(txtSenha.getPassword());
+            String senhaHash = Utils.calcularHash(senha);
+            usu.setSenha(senhaHash);
 
         }
+        Date data = Utils.converterStringToDate(dateNascimento.getText());
+        usu.setDataNasc(data);
+
+        usu.setAtivo(chkAtivo.isSelected());
+
+        //passar o usuario usu para controller
+        //enviar para o banco de dados
+        UsuarioController controller = new UsuarioController();
+
+        if (controller.alterarUsuario(usu)) {
+            JOptionPane.showMessageDialog(null, "Usuario: " + usu.getNome() + " Alterado com sucesso");
+
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuario não será alterado!");
+        }
+
     }
 
     public boolean verificarNome() {
@@ -78,13 +85,16 @@ public class FrAltUsuario extends javax.swing.JDialog {
     public boolean verificarSenha() {
 
         String senha = new String(txtSenha.getPassword()); // Converte char[] para String
+        if (txtSenha.isEditable()) {
 
-        if (senha.length() < 6 || senha.contains(" ")) {
-            JOptionPane.showMessageDialog(null, "Tem menos de 6 caracteres ou contem espaços.");
-            return false;
-        } else {
-            return true;
+            if (senha.length() < 6 || senha.contains(" ")) {
+                JOptionPane.showMessageDialog(null, "Tem menos de 6 caracteres ou contem espaços.");
+                return false;
+            } else {
+                return true;
+            }
         }
+        return true;
     }
 
     public boolean verificarNasc() {
@@ -102,8 +112,12 @@ public class FrAltUsuario extends javax.swing.JDialog {
 
     public boolean verificarCampos() {
 
-        verificarEmail();
-        verificarSenha();
+       if(verificarEmail() == false) {
+           return false;
+       }
+        if (verificarSenha() == false) {
+            return false;
+        }
 
         if (txtNome.getText().equals("")) {
 
@@ -288,11 +302,6 @@ public class FrAltUsuario extends javax.swing.JDialog {
 
         btAlterarSenha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btAlterarSenha.setText("Alterar Senha");
-        btAlterarSenha.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btAlterarSenhaMouseClicked(evt);
-            }
-        });
         btAlterarSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btAlterarSenhaActionPerformed(evt);
@@ -405,14 +414,6 @@ public class FrAltUsuario extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btCancelarKeyPressed
 
-    private void btAlterarSenhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAlterarSenhaMouseClicked
-
-        //verificar os Caampos preenchidos corretamente, se estiverem corretos vou gravar, senão nada acontece.
-        verificarCampos();
-        gravar();
-
-    }//GEN-LAST:event_btAlterarSenhaMouseClicked
-
     private void btAlterarSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btAlterarSenhaKeyPressed
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_SPACE) {
@@ -430,7 +431,9 @@ public class FrAltUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNomeKeyReleased
 
     private void btSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSalvarMouseClicked
-        // TODO add your handling code here:
+
+        gravar();
+
     }//GEN-LAST:event_btSalvarMouseClicked
 
     private void btSalvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btSalvarKeyPressed
