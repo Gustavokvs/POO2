@@ -99,7 +99,12 @@ public class UsuarioController {
 
     public boolean alterarUsuario(Usuario usu) {
 
-        String sql = "UPDATE USUARIO SET NOME = ?, EMAIL = ?, SENHA = ?, DATANASC = ?, ATIVO = ? WHERE ID = ?";
+        String sql = "UPDATE USUARIO SET NOME = ?, EMAIL = ? ";
+
+        if (usu.getSenha() != null) {
+            sql = sql + ", SENHA = ?";
+        }
+        sql = sql + " , DATANASC = ?, ATIVO = ? WHERE ID = ?";
 
         GerenciadorConexao conexão = new GerenciadorConexao();
         PreparedStatement comando = null;
@@ -109,10 +114,16 @@ public class UsuarioController {
 
             comando.setString(1, usu.getNome());
             comando.setString(2, usu.getEmail());
-            comando.setString(3, usu.getSenha());
-            comando.setDate(4, new java.sql.Date(usu.getDataNasc().getTime()));
-            comando.setBoolean(5, usu.isAtivo());
-            comando.setInt(6, usu.getId());
+            int numeroCampo = 3;
+            if (usu.getSenha() != null) {
+                comando.setString(numeroCampo, usu.getSenha());
+                numeroCampo++;
+            }
+            comando.setDate(numeroCampo, new java.sql.Date(usu.getDataNasc().getTime()));
+            numeroCampo++;
+            comando.setBoolean(numeroCampo, usu.isAtivo());
+            numeroCampo++;
+            comando.setInt(numeroCampo, usu.getId());
 
             comando.executeUpdate();
 

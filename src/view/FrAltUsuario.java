@@ -90,9 +90,9 @@ public class FrAltUsuario extends javax.swing.JDialog {
             if (senha.length() < 6 || senha.contains(" ")) {
                 JOptionPane.showMessageDialog(null, "Tem menos de 6 caracteres ou contem espaços.");
                 return false;
-            } else {
-                return true;
             }
+        } else {
+            return true;
         }
         return true;
     }
@@ -112,9 +112,9 @@ public class FrAltUsuario extends javax.swing.JDialog {
 
     public boolean verificarCampos() {
 
-       if(verificarEmail() == false) {
-           return false;
-       }
+        if (verificarEmail() == false) {
+            return false;
+        }
         if (verificarSenha() == false) {
             return false;
         }
@@ -133,12 +133,13 @@ public class FrAltUsuario extends javax.swing.JDialog {
 
             return false;
         }
+        if (txtSenha.isEditable()) {
+            if (new String(txtSenha.getPassword()).equals("")) {
 
-        if (new String(txtSenha.getPassword()).equals("")) {
+                JOptionPane.showMessageDialog(null, "Campo 'Senha' em branco");
 
-            JOptionPane.showMessageDialog(null, "Campo 'Senha' em branco");
-
-            return false;
+                return false;
+            }
         }
 
         String lSenha = new String(txtSenha.getPassword());
@@ -356,19 +357,9 @@ public class FrAltUsuario extends javax.swing.JDialog {
 
         btSalvar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btSalvar.setText("Salvar");
-        btSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btSalvarMouseClicked(evt);
-            }
-        });
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSalvarActionPerformed(evt);
-            }
-        });
-        btSalvar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                btSalvarKeyPressed(evt);
             }
         });
         jPanel1.add(btSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 730, -1, -1));
@@ -429,16 +420,6 @@ public class FrAltUsuario extends javax.swing.JDialog {
     private void txtNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeKeyReleased
-
-    private void btSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSalvarMouseClicked
-
-        gravar();
-
-    }//GEN-LAST:event_btSalvarMouseClicked
-
-    private void btSalvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btSalvarKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btSalvarKeyPressed
 
     private void btAlterarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarSenhaActionPerformed
 
