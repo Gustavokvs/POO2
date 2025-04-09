@@ -73,4 +73,15 @@ public class Usuario {
         this.ativo = ativo;
     }
 
+    public String ativoToString() {
+
+        if (this.ativo == true) {
+
+            return "Ativo";
+
+        } else {
+            return "Inativo";
+        }
+
+    }
 }

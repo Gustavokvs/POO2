@@ -5,6 +5,12 @@
  */
 package view;
 
+import controller.UsuarioController;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import model.Usuario;
+import utils.Utils;
+
 /**
  *
  * @author aluno.saolucas
@@ -17,6 +23,8 @@ public class FrConUsuario extends javax.swing.JDialog {
     public FrConUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -56,13 +64,33 @@ public class FrConUsuario extends javax.swing.JDialog {
             new String [] {
                 "id", "Nome", "Email", "Data de Nascimento", "Ativo"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblUsuarios);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 620, 330));
 
         btmPesquisar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btmPesquisar.setText("Pesquisar");
+        btmPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btmPesquisarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btmPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 200, -1, -1));
 
         btmCancelar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -71,11 +99,16 @@ public class FrConUsuario extends javax.swing.JDialog {
 
         btmAlterar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btmAlterar.setText("Alterar");
-        jPanel1.add(btmAlterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 600, -1, -1));
+        btmAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btmAlterarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btmAlterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 590, -1, -1));
 
         btmExcluir1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btmExcluir1.setText("Excluir");
-        jPanel1.add(btmExcluir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 600, -1, -1));
+        jPanel1.add(btmExcluir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 590, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -90,6 +123,64 @@ public class FrConUsuario extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btmPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmPesquisarActionPerformed
+
+        DefaultTableModel modeloTabela = (DefaultTableModel) tblUsuarios.getModel();
+
+        modeloTabela.setNumRows(0);
+
+        UsuarioController conexao = new UsuarioController();
+
+        List<Usuario> listaUsuarios = conexao.consultar();
+
+        //preencher a grade
+        //percorre todos os usuarios presentes na linha
+        for (Usuario usu : listaUsuarios) {
+            //cria um array onde cada posição é o valor das colunas da grade
+            Object[] linha = {
+                usu.getId(), //coluna 0
+                usu.getNome(), //coluna 1
+                usu.getEmail(), //coluna 2
+                Utils.converterDateToString(usu.getDataNasc()), //coluna 3
+                usu.ativoToString() //coluna 4
+            };
+
+            //adiciona o array com os dados do usuario na grade
+            modeloTabela.addRow(linha);
+
+        }
+
+    }//GEN-LAST:event_btmPesquisarActionPerformed
+
+    private void btmAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmAlterarActionPerformed
+
+        /*verificar se tem uma linha de grade selecionada
+        lembre-se de que a tabela é um array, arrays sempre começam do 0
+        então técnicamente falando a linha 1 é a linha 0
+         */
+        if (tblUsuarios.getSelectedRow() != -1) {
+            //se alguma linha estiver selecionada, pega o ID do usuário
+            int linhaSelecionada = tblUsuarios.getSelectedRow();
+            String textoCelula = tblUsuarios.getValueAt(linhaSelecionada, 0).toString();
+            /*O código acima faz o seguinte, ele verifica qual linha tá selecionada
+    ai ele dá pra linhaSelecionada o valor da linha
+    no String textoCelula, ele tá pegando o valor que tá na linha selecionada, na coluna 0 (lembre-se do array)
+    e tá transformando esse valor em String.
+             */
+
+            //converter o texto da célula em inteiro.
+            int id = Integer.parseInt(textoCelula);
+
+            /* com o id agora descoberto (pego) eu vou inicializar a tela de alterar usuário
+             */
+            FrAltUsuario telaAlt = new FrAltUsuario(null, rootPaneCheckingEnabled, id);
+
+            telaAlt.setVisible(true);
+        }
+
+
+    }//GEN-LAST:event_btmAlterarActionPerformed
 
     /**
      * @param args the command line arguments

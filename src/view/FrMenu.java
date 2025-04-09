@@ -109,6 +109,11 @@ public class FrMenu extends javax.swing.JFrame {
         meConsulta.setText("Consulta");
 
         miConUsuario.setText("Usuario");
+        miConUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miConUsuarioActionPerformed(evt);
+            }
+        });
         meConsulta.add(miConUsuario);
 
         jMenuItem3.setText("???");
@@ -143,7 +148,7 @@ public class FrMenu extends javax.swing.JFrame {
 
         //Crio a tela;
         FrCadUsuario telaCadastro = new FrCadUsuario(this, rootPaneCheckingEnabled);
-
+        
         telaCadastro.setVisible(true);
 
     }//GEN-LAST:event_miCadUsuarioActionPerformed
@@ -154,9 +159,9 @@ public class FrMenu extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         URL caminhoImagem = getClass().getResource("/images/title icon.png");
-
+        
         ImageIcon icon = new ImageIcon(caminhoImagem);
-
+        
         this.setIconImage(icon.getImage());
     }//GEN-LAST:event_formWindowOpened
 
@@ -165,11 +170,11 @@ public class FrMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_miSairActionPerformed
 
     private void btmAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmAlterarActionPerformed
-
+        
         int id = Integer.parseInt(txtId.getText());
-
+        
         FrAltUsuario telaAlteracao = new FrAltUsuario(this, rootPaneCheckingEnabled, id);
-
+        
         telaAlteracao.setVisible(true);
 
     }//GEN-LAST:event_btmAlterarActionPerformed
@@ -177,6 +182,14 @@ public class FrMenu extends javax.swing.JFrame {
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdActionPerformed
+
+    private void miConUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miConUsuarioActionPerformed
+        
+        FrConUsuario tabelaUsu = new FrConUsuario(this, rootPaneCheckingEnabled);
+        
+        tabelaUsu.setVisible(true);
+
+    }//GEN-LAST:event_miConUsuarioActionPerformed
 
     /**
      * @param args the command line arguments

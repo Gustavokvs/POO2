@@ -174,4 +174,53 @@ public class UsuarioController {
         return usu;
     }
 
+    public List<Usuario> consultar() {
+        //guarda o SQL
+        String sql = "SELECT * FROM usuario";
+
+        //Cria um gerenciador de conexão
+        GerenciadorConexao gerenciador = new GerenciadorConexao();
+        //cria as variáveis vazias antes do try pois vão ser usadas no final
+        PreparedStatement comando = null;
+        ResultSet resultado = null;
+
+        //Crio a lista de usuarios vazia
+        List<Usuario> listaUsuario = new ArrayList<>();
+
+        try {
+            //preparo do comando sql
+            comando = gerenciador.prepararComando(sql);
+
+            //como não há parâmetros(?) já executo direto
+            resultado = comando.executeQuery();
+            //irá percorrer os registros do resultado do sql
+            // a cada next() == true quer dizer que tem registros
+            while (resultado.next()) {
+
+                //crio um novo usuario vazio
+                Usuario usuario = new Usuario();
+
+                //leio as informações da variável resultado e guardo no usuário
+                usuario.setId(resultado.getInt("id"));
+                usuario.setNome(resultado.getString("nome"));
+                usuario.setEmail(resultado.getString("email"));
+                usuario.setSenha(resultado.getString("senha"));
+                usuario.setDataNasc(resultado.getDate("dataNasc"));
+                usuario.setAtivo(resultado.getBoolean("ativo"));
+
+                //adiciono o usuario na lista
+                listaUsuario.add(usuario);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioController.class.getName()).log(
+                    Level.SEVERE, null, ex);
+        } finally {
+            gerenciador.fecharConexao(comando, resultado);
+
+        }
+
+        //retorno a lista de usuarios
+        return listaUsuario;
+    }
 }
