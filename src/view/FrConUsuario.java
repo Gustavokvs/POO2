@@ -188,6 +188,8 @@ public class FrConUsuario extends javax.swing.JDialog {
             FrAltUsuario telaAlt = new FrAltUsuario(null, rootPaneCheckingEnabled, id);
 
             telaAlt.setVisible(true);
+
+            pesquisar();
         }
 
 
@@ -205,7 +207,11 @@ public class FrConUsuario extends javax.swing.JDialog {
             //com o id vou chamar o método de deletar do controller
             UsuarioController controller = new UsuarioController();
             if (controller.deletar(id)) {
+
+                pesquisar();
+
                 JOptionPane.showMessageDialog(null, "Usuário apagado com sucesso");
+
             } else {
                 JOptionPane.showMessageDialog(null, "Ocorreu um erro ao deletar.");
             }
