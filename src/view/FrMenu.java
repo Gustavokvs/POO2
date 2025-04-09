@@ -32,7 +32,7 @@ public class FrMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        IconUser = new javax.swing.JLabel();
         btmAlterar = new javax.swing.JButton();
         lbCodUsu = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
@@ -57,8 +57,8 @@ public class FrMenu extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(102, 255, 102));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user512px.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, -1, -1));
+        IconUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user512px.png"))); // NOI18N
+        jPanel1.add(IconUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, -1, -1));
 
         btmAlterar.setText("Alterar");
         btmAlterar.addActionListener(new java.awt.event.ActionListener() {
@@ -227,9 +227,9 @@ public class FrMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel IconUser;
     private javax.swing.JMenuBar barMenu;
     private javax.swing.JButton btmAlterar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;

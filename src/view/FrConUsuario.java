@@ -132,6 +132,12 @@ public class FrConUsuario extends javax.swing.JDialog {
 
     private void btmPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmPesquisarActionPerformed
 
+        pesquisar();
+
+
+    }//GEN-LAST:event_btmPesquisarActionPerformed
+
+    public void pesquisar() {
         DefaultTableModel modeloTabela = (DefaultTableModel) tblUsuarios.getModel();
 
         modeloTabela.setNumRows(0);
@@ -156,8 +162,7 @@ public class FrConUsuario extends javax.swing.JDialog {
             modeloTabela.addRow(linha);
 
         }
-
-    }//GEN-LAST:event_btmPesquisarActionPerformed
+    }
 
     private void btmAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmAlterarActionPerformed
 
