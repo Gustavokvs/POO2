@@ -7,6 +7,7 @@ package view;
 
 import controller.UsuarioController;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Usuario;
 import utils.Utils;
@@ -108,6 +109,11 @@ public class FrConUsuario extends javax.swing.JDialog {
 
         btmExcluir1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btmExcluir1.setText("Excluir");
+        btmExcluir1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btmExcluir1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(btmExcluir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 590, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -181,6 +187,26 @@ public class FrConUsuario extends javax.swing.JDialog {
 
 
     }//GEN-LAST:event_btmAlterarActionPerformed
+
+    private void btmExcluir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmExcluir1ActionPerformed
+
+        if (tblUsuarios.getSelectedRow() != -1) {
+
+            int linhaSelecionada = tblUsuarios.getSelectedRow();
+            String textoCelula = tblUsuarios.getValueAt(linhaSelecionada, 0).toString();
+
+            int id = Integer.parseInt(textoCelula);
+
+            //com o id vou chamar o método de deletar do controller
+            UsuarioController controller = new UsuarioController();
+            if (controller.deletar(id)) {
+                JOptionPane.showMessageDialog(null, "Usuário apagado com sucesso");
+            } else {
+                JOptionPane.showMessageDialog(null, "Ocorreu um erro ao deletar.");
+            }
+        }
+
+    }//GEN-LAST:event_btmExcluir1ActionPerformed
 
     /**
      * @param args the command line arguments
