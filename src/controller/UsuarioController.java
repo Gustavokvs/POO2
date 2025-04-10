@@ -97,6 +97,29 @@ public class UsuarioController {
         return false;
     }
 
+    public boolean deletar(int id) {
+
+        String sql = "DELETE FROM USUARIO WHERE ID = ?";
+
+        GerenciadorConexao conexão = new GerenciadorConexao();
+        PreparedStatement comando = null;
+
+        try {
+            comando = conexão.prepararComando(sql);
+            comando.setInt(1, id);
+
+            comando.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+
+        } finally {
+            conexão.fecharConexao(comando);
+        }
+        return false;
+    }
+
     public boolean alterarUsuario(Usuario usu) {
 
         String sql = "UPDATE USUARIO SET NOME = ?, EMAIL = ? ";
